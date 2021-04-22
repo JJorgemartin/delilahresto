@@ -14,4 +14,15 @@ router.route('/')
         res.json('Hola desde delete de productos')
     });
 
+router.route('/:id')
+    .get((req, res) => {
+        const idPedido = req.params.id;
+        res.json('El pedido ' + idPedido);
+    })
+    .put((req,res) => {
+        const idPedido = req.params.id;
+        const { estadoNuevo } = req.body;
+        res.json('El pedido ' + idPedido + ' se cambio al estado ' + estadoNuevo);
+    })
+
 module.exports = router;

@@ -1,17 +1,25 @@
 const router = require('express').Router();
+const validarAdmin = require('../middlewares/validarAdministrador');
+const Usuario = require('../models/Usuario');
 
 router.route('/')
-    .get((req, res) => {
-        res.json('Hola desde get de usuario')
+    .get( validarAdmin, async (req, res) => {
+        const usuario = await Usuario.obtenerTodos();
+        res.json(usuario);
     })
-    .post((req, res) => {
-        res.json('Hola desde post de usuario')
+    .put(validarAdmin, async (req, res) => {
+        const id_usuario = req.query.id;
+        const { nombre_usuario, nombre_apellido, email, direccion_envio, telefono,} = req.body;
+
+        const result = await Usuario.actualizar(id_usuario, nombre_usuario, nombre_apellido, email, direccion_envio, telefono);
+
+        res.json(result);
     })
-    .put((req, res) => {
-        res.json('Hola desde put de usuario')
-    })
-    .delete((req, res) => {
-        res.json('Hola desde delete de usuario')
+    .delete( validarAdmin , async (req, res) => {
+        const id_usuario = req.query.id;
+        const result = await Usuario.borrar(id_usuario);
+        res.json('Usuario eliminado con id ' + id_usuario);
     });
+
 
 module.exports = router;
