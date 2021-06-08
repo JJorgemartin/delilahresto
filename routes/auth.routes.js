@@ -26,9 +26,11 @@ router.route('/login').post(async (req, res) => {
 
 router.route('/registrar').post(validarUsuario.validarEmail, validarUsuario.validarVacios, async (req, res) => {
     const { nombre_usuario, nombre_apellido, email, direccion_envio, telefono, contrasena } = req.body;
+    
+    const hash = bcrypt.hashSync(contrasena, 10);
 
     const result = await Usuario.crear(nombre_usuario, nombre_apellido, email, direccion_envio, telefono, hash);
-    res.status(204).end();
+    res.status(204).json('El usuario fue registrado exitosamente');
     });
     
 

@@ -1,3 +1,4 @@
+const sequelize = require("../conexion");
 const Usuario = require("../models/Usuario");
 
 
@@ -13,8 +14,14 @@ const validarVacios = async (req, res, next) => {
 
 //Corregir esta funcion!
 const validarEmail = async (req, res, next) => {
-    const email = await Usuario.findOne({ where: {email: req.body.email}});
-    if (email){ 
+    const email = await sequelize.query ('SELECT * FROM usuario', 
+    {type: sequelize.QueryTypes.SELECT});
+
+    // console.log(email);
+
+    const verifyEmail = email.find(x => x.email == req.body.email);
+
+    if (verifyEmail){ 
         return res.status(400).json({ message: "El mail ya esta registrado"})
     }
     next();
