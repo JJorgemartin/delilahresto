@@ -2,10 +2,6 @@
 
 Este es el tercer proyecto del programa DWFS en Acamica
 
-## Tareas pendientes 
-- [] Crear API y sus Rutas
-- [] Crear conexcion con la BD
-- [] Crear archivo yaml
 
 ## Instalacion del proyecto
 
@@ -13,7 +9,8 @@ Este es el tercer proyecto del programa DWFS en Acamica
 Realizar los siguientes pasos para inicializar en el proyecto
 
 ```bash
-npm install 
+npm install
+npm i bcryptjs, dotenv, express, express-jwt, jsonwebtoken, mysql2, sequelize
 ```
 
 ### Instalacion de la base de datos
@@ -22,14 +19,10 @@ Correr el script para crear la BD:
 ```sql
 CREATE DATABASE restaurante;
 ```
-
-Crear la tabla usuario
-```sql
-CREATE TABLE usuarios(
-    id INT NOT NULL PRIMARY KEY,
-    nombre VARCHAR(250) NOT NULL,
-);
-```
+Y se importa el archivo de nombre delilahrestoBD.sql
 
 ### Instalacion POSTMAN
-Buscar el archivo colection.json e importarlo en postman para hacer pruebas
+Buscar el archivo delilahresto.postman_collection e importarlo en postman para hacer pruebas
+
+### Corrobar documentacion mediante SWAGGER
+Buscar el archivo delilahresto.yml este contiene las especificaciones de los endpoints en formato OpenAPI 3.0.1
