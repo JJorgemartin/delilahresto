@@ -3,6 +3,9 @@ const conexion = require('../conexion');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const sequelize = require('./../conexion');
+const Usuario = require('../models/Usuario');
+const validarUsuario = require('../middlewares/validarUsuario');
+
 
 router.route('/login').post(async (req, res) => {
     const {nombre_usuario, contrasena } = req.body;
@@ -21,15 +24,12 @@ router.route('/login').post(async (req, res) => {
 
     })
 
-router.route('/registrar').post(async (req, res) => {
+router.route('/registrar').post(validarUsuario.validarEmail, validarUsuario.validarVacios, async (req, res) => {
     const { nombre_usuario, nombre_apellido, email, direccion_envio, telefono, contrasena } = req.body;
 
-    const hash = bcrypt.hashSync(contrasena, 10);
-
-    await conexion.query('INSERT INTO usuario (nombre_usuario, nombre_apellido, email, direccion_envio, telefono, contrasena, esAdministrador) VALUES (?,?,?,?,?,?,FALSE)', {
-        replacements: [nombre_usuario, nombre_apellido, email, direccion_envio, telefono, hash]
-    });
+    const result = await Usuario.crear(nombre_usuario, nombre_apellido, email, direccion_envio, telefono, hash);
     res.status(204).end();
     });
+    
 
 module.exports = router;

@@ -33,6 +33,22 @@ Pedido.obtenerTodos = async () => {
     return result;
 };
 
+Pedido.obtenerPorId = async (id) => {
+    const result = await sequelize.query('SELECT pedidos.estado_pedido, pedidos.id, pedidos.total, pedidos.forma_pago, usuario.nombre_apellido, usuario.direccion_envio FROM pedidos JOIN usuario ON usuario.id = pedidos.usuario_id WHERE pedidos.id = ?', 
+        {   replacements: [id],
+            type: sequelize.QueryTypes.SELECT });
+    console.log(result);
+    return result;
+};
+
+Pedido.borrarPorId = async (id) => {
+    const result = await sequelize.query('SELECT pedidos.estado_pedido, pedidos.id, pedidos.total, pedidos.forma_pago, usuario.nombre_apellido, usuario.direccion_envio FROM pedidos JOIN usuario ON usuario.id = pedidos.usuario_id WHERE pedidos.id = ?', 
+        {   replacements: [id],
+            type: sequelize.QueryTypes.SELECT });
+    console.log(result);
+    return result;
+};
+
 Pedido.obtenerDetalle = async (id_pedido) => {
     const result = await sequelize.query('SELECT productos.nombre, productos.url_foto, productos.precio, pedido_productos.cantidad FROM pedido_productos JOIN productos ON productos.id = pedido_productos.producto_id WHERE pedido_productos.pedido_id = ?', 
     { 
@@ -41,7 +57,7 @@ Pedido.obtenerDetalle = async (id_pedido) => {
     });
     console.log(result);
     return result;
-}
+};
 
 Pedido.actualizarEstado = async (id_pedido, estado_pedido) => {
     try{

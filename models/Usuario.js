@@ -1,11 +1,14 @@
 const sequelize = require('./../conexion');
+const bcrypt = require('bcryptjs');
 
 const Usuario = {};
 
 Usuario.crear = async (nombre_usuario, nombre_apellido, email, direccion_envio, telefono, contrasena, esAdministrador) => {
     try{
-        const result = await sequelize.query('INSERT INTO usuario (nombre_usuario, nombre_apellido, email, direccion_envio, telefono, contrasena, esAdministrador) VALUES (?,?,?,?,?,?,?)', 
-        { replacements: [nombre_usuario, nombre_apellido, email, direccion_envio, telefono, contrasena, esAdministrador]
+        const hash = bcrypt.hashSync(contrasena, 10);
+
+        const result = await sequelize.query('INSERT INTO usuario (nombre_usuario, nombre_apellido, email, direccion_envio, telefono, contrasena, esAdministrador) VALUES (?,?,?,?,?,?,FALSE)', 
+        { replacements: [nombre_usuario, nombre_apellido, email, direccion_envio, telefono, hash]
     }); 
         console.log(result);
         return result;

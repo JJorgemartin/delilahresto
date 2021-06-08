@@ -1,19 +1,23 @@
 const router = require('express').Router();
 const validarAdministrador = require('../middlewares/validarAdministrador');
 const Pedido = require('../models/Pedidos');
+const validarVaciosPed = require('../middlewares/validarPedidos');
 
 router.route('/')
-    // .get( validarAdministrador, async (req, res) => {
-    //     const pedidos = await Pedido.obtenerTodos();
-    //     // pedidos.forEach( async (pedido) => {
-    //     //     const detalles = await Pedido.obtenerDetalle(pedido.id);
-    //     //     detalles.forEach(detalle => {
-    //     //         pedido.descripcion += `${detalle.cantidad}x ${detalle.nombre}`
-    //     //     });
-    //     })
-    //     res.json(pedidos)
-    // })
-    .post( validarAdministrador , async (req, res) => {
+    .get(validarAdministrador, async (req, res) => {
+        let pedidos = await Pedido.obtenerTodos();
+
+        pedidos = await Promise.all(
+            pedidos.map(async pedido => {
+                const detalles = await Pedido.obtenerDetalle(pedido.id)
+                pedido.detalles = detalles;
+                return pedido;
+            })
+        );
+
+        res.json(pedidos);
+    })
+    .post( validarAdministrador, validarVaciosPed , async (req, res) => {
         const { id_usuario, forma_pago, total, productos} = req.body;
         const result = await Pedido.crear(forma_pago, 'Nuevo', total, id_usuario);
 
@@ -24,23 +28,34 @@ router.route('/')
         console.log(result[0]);
         res.json('ok')
     })
-    .put((req, res) => {
-        res.json('Hola desde put de pedidos')
-    })
-    .delete((req, res) => {
-        res.json('Hola desde delete de pedidos')
-    });
 
-router.route('/:id')
-    .get((req, res) => {
+    
+    router.route('/:id')
+    .get( async (req, res) => {
         const idPedido = req.params.id;
-        res.json('El pedido' + idPedido)
-    })
+        
+        let pedidos = await Pedido.obtenerPorId(idPedido);
+        pedidos = await Promise.all(
+            pedidos.map(async pedido => {
+                const detalles = await Pedido.obtenerDetalle(pedidos.id)
+                pedido.detalles = detalles;
+                return pedido;
+            })
+            );
+            
+            res.json(pedidos);
+        })
     .put((req, res) => {
         const idPedido = req.params.id;
         const { estadoNuevo } = req.body;
-
-        res.json('El pedido ' + idPedido + ' se cambio al estado ');
+        Pedido.actualizarEstado(idPedido, estadoNuevo);
+            
+        res.json('El pedido ' + idPedido + ' se cambio al estado ' + estadoNuevo);
     })
-
+        
+    .delete((req, res) => {
+        const idPedido = req.params.id;
+        Pedido.borrarPorId(idPedido);
+        res.json('El pedido' + idPedido + 'fue eliminado correctamente');
+    });
 module.exports = router;
