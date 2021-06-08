@@ -1,0 +1,310 @@
+{
+	"info": {
+		"_postman_id": "b71f0b5e-239c-4f35-9486-efc3d6189cda",
+		"name": "delilahresto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login Usuarios",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre_usuario\": \"Jorgiasdt456\",\r\n    \"contrasena\": \"4565063jor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Usuarios",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiSm9yZ2UgTWFydGluIiwiZGlyZWNjaW9uX2VudmlvIjoiRGllZ28gZGUgdG9ycmVzIiwiZW1haWwiOiJKb3JnZ2FzZGl0bzM0QHRlc3QuY29tIiwiZXNBZG1pbmlzdHJhZG9yIjoxLCJpYXQiOjE2MTkwNTU3ODh9.9jBqEKKQJBGx0_474xsFy4ZtSvYgwxgfO-14s7MKIFk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/usuarios",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registracion de usuarios",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre_usuario\": \"Jasd\",\r\n    \"nombre_apellido\": \"Joasd Martin\",\r\n    \"email\": \"Joasdito@aasd.com\",\r\n    \"direccion_envio\": \"asdasd\",\r\n    \"telefono\": 1564892,\r\n    \"contrasena\": \"4565063jor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/registrar",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"registrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar Usuarios",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiSm9yZ2UgTWFydGluIiwiZGlyZWNjaW9uX2VudmlvIjoiRGllZ28gZGUgdG9ycmVzIiwiZW1haWwiOiJKb3JnZ2FzZGl0bzM0QHRlc3QuY29tIiwiZXNBZG1pbmlzdHJhZG9yIjoxLCJpYXQiOjE2MTkwNDcxOTJ9.q_MCREUOPK5Ty8hf40BmGt_UMh0S-FCS4QwLav0by3g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre_usuario\": \"test25\",\r\n    \"nombre_apellido\": \"Test\",\r\n    \"email\": \"test123@test.com\",\r\n    \"direccion_envio\": \"siempre viva 123\",\r\n    \"telefono\": \"123453\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/usuarios?id=6",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"usuarios"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener productos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiSm9yZ2UgTWFydGluIiwiZGlyZWNjaW9uX2VudmlvIjoiRGllZ28gZGUgdG9ycmVzIiwiZW1haWwiOiJKb3JnZ2FzZGl0bzM0QHRlc3QuY29tIiwiZXNBZG1pbmlzdHJhZG9yIjoxLCJpYXQiOjE2MjMxMDg2Njh9.BKjoOyLO6gvowvIp-zl7_tpGbvHjeAbx0bNh8xZSW3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/productos",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Productos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiSm9yZ2UgTWFydGluIiwiZGlyZWNjaW9uX2VudmlvIjoiRGllZ28gZGUgdG9ycmVzIiwiZW1haWwiOiJKb3JnZ2FzZGl0bzM0QHRlc3QuY29tIiwiZXNBZG1pbmlzdHJhZG9yIjoxLCJpYXQiOjE2MjMxMDg2Njh9.BKjoOyLO6gvowvIp-zl7_tpGbvHjeAbx0bNh8xZSW3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Papas Fritas\",\r\n    \"url_foto\" :\"https://www.hola.com/imagenes/cocina/tecnicas-de-cocina/20200331164382/como-hacer-patatas-fritas-infalibles/0-857-558/portada-patatas-age-m.jpg\",\r\n    \"precio\": \"250\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/productos",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener pedido por Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiSm9yZ2UgTWFydGluIiwiZGlyZWNjaW9uX2VudmlvIjoiRGllZ28gZGUgdG9ycmVzIiwiZW1haWwiOiJKb3JnZ2FzZGl0bzM0QHRlc3QuY29tIiwiZXNBZG1pbmlzdHJhZG9yIjoxLCJpYXQiOjE2MjMxMDg2Njh9.BKjoOyLO6gvowvIp-zl7_tpGbvHjeAbx0bNh8xZSW3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/pedidos/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"pedidos",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los pedidos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvIjoiSm9yZ2UgTWFydGluIiwiZGlyZWNjaW9uX2VudmlvIjoiRGllZ28gZGUgdG9ycmVzIiwiZW1haWwiOiJKb3JnZ2FzZGl0bzM0QHRlc3QuY29tIiwiZXNBZG1pbmlzdHJhZG9yIjoxLCJpYXQiOjE2MjMxMDg2Njh9.BKjoOyLO6gvowvIp-zl7_tpGbvHjeAbx0bNh8xZSW3k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/pedidos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"pedidos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Pedido",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_usuario\": \"3\",\r\n    \"forma_pago\": \"Efectivo\",\r\n    \"total\": 2000,\r\n    \"productos\":\r\n    {\r\n        \"id\" : 1,\r\n        \"precio\": 500,\r\n        \"cantidad\": 1\r\n    }\r\n    {\r\n        \"id\": 2,\r\n        \"precio\": 1500,\r\n        \"cantidad\": 1\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/pedidos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"pedidos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
