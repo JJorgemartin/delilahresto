@@ -21,6 +21,16 @@ router.route('/')
         const idProduc = req.params.id;
         res.json('El pedido ' + idProduc);
     })
+    .put(validarAdministrador, async (req, res) => {
+        const idProdct = req.params.id;
+        
+        const { precio } = req.body 
+        
+        const ActProducto = await sequelize.query('UDAPTE productos SET precio = ? WHERE id = ?', 
+        { replacements: [id, precio ]}) (idProdct, precio)
+
+        res.json('El precio del producto fue actualizado correctamente')
+    })
     .delete(validarAdministrador, async (req, res) => {
         const idProduct = req.params.id;
         const borrarProducto = await sequelize.query('DELETE FROM usuarios WHERE id = ?', {replacements: [id]});
@@ -28,6 +38,5 @@ router.route('/')
         res.json(`El producto con el siguiente ${idProduct} fue eliminado`);
     });
 
-    //El PUT se va actualizar directamente desde la UI entre las opciones de la BD
     
 module.exports = router;

@@ -1,0 +1,573 @@
+---
+openapi: 3.0.0
+info:
+  title: Delilah resto
+  description: Esta es la informacion sobre el CRUD de delilah Resto
+  contact:
+    name: Jorge
+    email: jorgemartin.jjm@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/JJorgemartin/delilahresto/1.0.0
+  description: Info sobre API
+tags:
+- name: Usuarios
+  description: CRUD sobre los usuarios tanto admin como no
+- name: Productos
+  description: CRUD sobre los productos del Resto
+- name: Pedidos
+  description: CRUD sobre los pedidos realizados por el cliente
+paths:
+  /Usuarios:
+    get:
+      tags:
+      - Usuarios
+      summary: Obtener todos los usuarios
+      description: Se van a traer los usuarios y solo puede ser consultado por el admin
+      operationId: Usuario.obtener
+      parameters:
+      - name: esAdministrador
+        in: query
+        description: Solo el Administrador puede consultar los usuarios
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Trae todos los usuarios del sistema
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usuarios'
+        "400":
+          description: No tiene permiso para esta peticion
+    put:
+      tags:
+      - Usuarios
+      summary: Actualiza o modifica un cliente
+      description: Actualiza y/o modifica un usuario creado
+      operationId: Usuario.actualizar
+      parameters:
+      - name: id
+        in: query
+        description: Es necesario un id para la modificacion del usuario
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        description: Datos necesarios para la creacion del usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuarios'
+      responses:
+        "201":
+          description: Los datos fueron modificados exitosamente
+        "400":
+          description: No puede haber ningun campo vacio
+    post:
+      tags:
+      - Usuarios
+      summary: Registracion de un nuevo cliente
+      description: Crea un nuevo usuario al cliente
+      operationId: Usuario.crear
+      parameters:
+      - name: email
+        in: query
+        description: Email necesario para la cuenta
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: nombre
+        in: query
+        description: Ingrese su nombre
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: apellido
+        in: query
+        description: Ingrese su apellido
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: direccionEnvio
+        in: query
+        description: Ingrese direccion de envio
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: telefono
+        in: query
+        description: Ingrese su telefono movil
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: contrasena
+        in: query
+        description: Ingrese su contrasena con al menos una letra y una mayuscula
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      requestBody:
+        description: Datos necesarios para la creacion del usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuarios'
+      responses:
+        "201":
+          description: Usuario creado
+        "400":
+          description: No puede haber ningun campo vacio
+        "405":
+          description: Este mail ya se encuentra registrado
+    delete:
+      tags:
+      - Usuarios
+      summary: Borra un cliente
+      description: Borra un cliente de la base de datos
+      operationId: Usuario.borrar
+      parameters:
+      - name: id
+        in: query
+        description: Es necesario un id para borrar un usuario
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: esAdministrador
+        in: query
+        description: Es necesario tener permiso de administrador
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "201":
+          description: El cliente fue eliminado exitosamente
+        "400":
+          description: No puede borrarse sin el id
+  /Productos:
+    get:
+      tags:
+      - Productos
+      summary: Obtener todos los productos creados
+      description: Van a consultarse todos los productos que esten disponibles
+      operationId: Producto.obtener
+      parameters:
+      - name: Pedidos
+        in: query
+        description: Todos los usuarios pueden consultar por los productos
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Trae todos los productos del sistema
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Productos'
+        "400":
+          description: El producto que intenta buscar no se encuentra disponible
+    put:
+      tags:
+      - Productos
+      summary: Crea un nuevo producto para el sistema
+      description: Va a agregarse un nuevo producto al menu
+      operationId: Producto.actualizar
+      parameters:
+      - name: esAdministrador
+        in: query
+        description: Solo el administrador puede actualizar nuevos productos
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: Id del producto que se va actualizar
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: nombre
+        in: query
+        description: Actualizacion del producto
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: precio
+        in: query
+        description: Nuevo precio del producto agregado
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El producto fue actualizado correctamente
+          content:
+            applicacion/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Productos'
+        "400":
+          description: No tienes permiso para la actualizacion del producto
+    post:
+      tags:
+      - Productos
+      summary: Crea un nuevo producto para el sistema
+      description: Va a agregarse un nuevo producto al menu
+      operationId: Producto.crear
+      parameters:
+      - name: esAdministrador
+        in: query
+        description: Solo el administrador puede crear nuevos productos
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: nombre
+        in: query
+        description: Nombre del nuevo producto
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: precio
+        in: query
+        description: Precio del nuevo producto agregado
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El producto fue creado correctamente
+          content:
+            applicacion/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Productos'
+        "400":
+          description: No tienes permiso para la creacion de un nuevo producto
+    delete:
+      tags:
+      - Productos
+      summary: Crea un nuevo producto para el sistema
+      description: Va a agregarse un nuevo producto al menu
+      operationId: Producto.borrar
+      parameters:
+      - name: esAdministrador
+        in: query
+        description: Solo el administrador puede actualizar nuevos productos
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: Id del producto que se va actualizar
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El producto fue borrado correctamente
+          content:
+            applicacion/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Productos'
+        "400":
+          description: No tienes autorizacion para la eliminacion del producto
+  /Pedidos:
+    get:
+      tags:
+      - Pedidos
+      summary: Obtener todos los productos creados
+      description: Van a consultarse todos los productos que esten disponibles
+      operationId: Pedidos.obtener
+      parameters:
+      - name: esAdministrador
+        in: query
+        description: Para obtener los pedidos realizados se necesita se administrador
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Trae todos los productos del sistema
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pedidos'
+        "400":
+          description: El pedido no se encuentra en el sistema
+    put:
+      tags:
+      - Pedidos
+      summary: Modificar el estado del pedido
+      description: El administrador va a poder cambiar el estado del pedido
+      operationId: Pedidos.modificar
+      parameters:
+      - name: estado_pedido
+        in: query
+        description: Se necesita ser administrador para el cambio del estado del pedido
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: esAdministrador
+        in: query
+        description: Necesario para hacer cambio en el estado del pedido
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El pedido fue modificado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pedidos'
+        "405":
+          description: No tiene autorizacion para cambiar el estado del pedido
+    post:
+      tags:
+      - Pedidos
+      summary: Crea un pedido
+      description: Crea un pedido con los datos necesarios
+      operationId: Pedidos.crear
+      parameters:
+      - name: usuario_id
+        in: query
+        description: Se necesita el id del usuario para la creacion de un nuevo pedido
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: productos_id
+        in: query
+        description: Se necesita los id de los productos del nuevo pedido
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: forma_pago
+        in: query
+        description: Como va a ser el pago del usuario
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: cantidad
+        in: query
+        description: cantidad de los productos en el pedido
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: total
+        in: query
+        description: Total de los precios de los pedidos solicitados
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El pedido fue creado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pedidos'
+        "400":
+          description: El pedido no se pudo realizar
+    delete:
+      tags:
+      - Pedidos
+      summary: Borrar el pedido completamente
+      description: Borrar el pedido por parte del usuario o del administrador
+      operationId: Pedidos.borrar
+      parameters:
+      - name: id
+        in: query
+        description: Se va a borrar
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: El pedido fue borrado correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pedidos'
+        "405":
+          description: No se puede eliminar el pedido porque ya esta yendo a su domicilio
+components:
+  schemas:
+    Usuarios:
+      required:
+      - apellido
+      - contrasena
+      - direccionEnvio
+      - esAdministrador
+      - id
+      - mail
+      - nombre
+      - telefono
+      type: object
+      properties:
+        id:
+          type: string
+          format: int64
+          example: "12"
+        nombre:
+          type: string
+          format: int64
+          example: Jorge
+        apellido:
+          type: string
+          format: int64
+          example: Martin
+        mail:
+          type: string
+          format: int64
+          example: Jorge20@acamica.com
+        contrasena:
+          type: string
+          format: password
+          example: 4564982Ja
+        direccionEnvio:
+          type: string
+          format: int64
+          example: Siempre viva 123
+        telefono:
+          type: string
+          format: int64
+          example: "15689768"
+        esAdministrador:
+          type: boolean
+    Productos:
+      required:
+      - id
+      - nombre
+      - precio
+      - url_foto
+      type: object
+      properties:
+        id:
+          type: string
+          format: int64
+          example: "12"
+        nombre:
+          type: string
+          format: int64
+          example: Coca Cola de 500ml
+        url_foto:
+          type: string
+          format: int64
+          example: https://www.cocacola.es/content/dam/GO/CokeZone/Spain/Coca-Cola-Full-Red-vidrio-Sabor-Original.jpg
+    Pedidos:
+      required:
+      - cantidad
+      - estado_pedido
+      - forma_pago
+      - id
+      - productos_id
+      - total
+      - usuario_id
+      type: object
+      properties:
+        id:
+          type: string
+          format: int64
+          example: "12"
+        usuario_id:
+          type: string
+          format: int64
+          example: '{"id":123,"nombre":"Jorge","Direccion de envio":"Siempre viva 123","mail":"jorge20@acamica.com","telefono":15648979}'
+        productos_id:
+          type: string
+          format: int64
+          example: '{"id":12,"nombre":"Hamburguesas","precio":500}'
+        forma_pago:
+          type: string
+          format: int64
+          example: Efectivo
+        estado_pedido:
+          type: string
+          format: int64
+          example: En confirmacion
+        cantidad:
+          type: string
+          format: int64
+          example: "5"
+        total:
+          type: string
+          format: int64
+          example: "500"
